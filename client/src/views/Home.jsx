@@ -8,7 +8,8 @@ import roadmap from '../assets/images/roadmap.png';
 const useStyles = makeStyles(() => ({
   blueBanner: {
     backgroundColor: colors.blue.light[2],
-    display: 'flex'
+    display: 'flex',
+    overflow: 'hidden'
   },
   card: {
     padding: '4em 0',
@@ -52,9 +53,7 @@ export default function Home() {
               </Slide>
             </Grid>
             <Grid item xs={4}>
-              <Container maxWidth='sm' className={classes.roadmap}>
-                <img src={roadmap} alt='roadmap' />
-              </Container>
+              <img className={classes.roadmap} src={roadmap} alt='roadmap' />
             </Grid>
           </Grid>
         </Container>
