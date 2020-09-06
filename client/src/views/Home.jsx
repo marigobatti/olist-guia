@@ -1,7 +1,7 @@
 import React from 'react';
-import { Slide, Grid, Container } from '@material-ui/core';
+import { Slide, Grid, Container, Divider, List, ListItem, ListItemIcon, ListItemText, ListItemLink } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { colors, Text } from '@olist/united';
+import { colors, Text, Card, Icon } from '@olist/united';
 import roadmap from '../assets/images/roadmap.png';
 
 
@@ -17,6 +17,9 @@ const useStyles = makeStyles(() => ({
   },
   roadmap: {
     padding: '4em 0'
+  },
+  guideIntent: {
+    marginTop: '2em'
   }
 }));
 
@@ -29,9 +32,9 @@ export default function Home() {
         <Container>
           <Grid container spacing={3}>
             <Grid item xs={8}>
-              <Slide direction="right" in={true} timeout={1000} mountOnEnter unmountOnExit>
+              <Slide direction='right' in={true} timeout={1000} mountOnEnter unmountOnExit>
                 <div className={classes.card}>
-                  <Text fontSize="3em" fontWeight="bold">se você é um(a) vendedor(a) olist</Text>
+                  <Text fontSize='3em' fontWeight='bold'>se você é um(a) vendedor(a) olist</Text>
                   <Text.H4>
                     e ainda tem dificuldades no processo de utilização da plataforma, essa é a sua chance de aprender a navegar no site,
                     e aplicar as estratégias de venda e divulgação que melhor funcionam no nosso universo!
@@ -42,22 +45,48 @@ export default function Home() {
                     como atingir melhores resultados e ainda ganhar pontos de troca pelos conteúdos consumidos!
                   </Text.H4>
 
-                  <Text.H4 fontWeight="bold">
+                  <Text.H4 fontWeight='bold'>
                     Não desista, persista!
                   </Text.H4>
                 </div>
               </Slide>
             </Grid>
             <Grid item xs={4}>
-              <Container maxWidth="sm" className={classes.roadmap}>
+              <Container maxWidth='sm' className={classes.roadmap}>
                 <img src={roadmap} alt='roadmap' />
               </Container>
             </Grid>
           </Grid>
         </Container>
       </div>
-      <Container>
-      
+      <Container className={classes.guideIntent}>
+        <Card>
+          <Card.Header>
+            <Text.H2 fontWeight='bold'>como este guia pode te ajudar</Text.H2>
+          </Card.Header>
+          <Card.Content>
+            <List component='nav'>
+              <ListItem button>
+                <ListItemIcon>
+                  1
+                </ListItemIcon>
+                <ListItemText primary='informações centralizadas' secondary='aprenda tudo sobre o olist'  />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  2
+                </ListItemIcon>
+                <ListItemText primary='motivação' secondary='veja seus resultados melhorarem ao aplicar nossas recomendações'/>
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  2
+                </ListItemIcon>
+                <ListItemText primary='pontos de troca' secondary='mais vantagens ao aprender e aplicar o conteúdo'/>
+              </ListItem>
+            </List>
+          </Card.Content>
+        </Card>
       </Container>
     </>
   );
