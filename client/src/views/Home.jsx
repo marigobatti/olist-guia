@@ -1,14 +1,17 @@
 import React from 'react';
 import { Slide, Grid, Container, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { colors, Text, Card } from '@olist/united';
+import { theme, colors, Text, Card } from '@olist/united';
+
+import Footer from '../components/Footer';
 import roadmap from '../assets/images/roadmap.png';
 
 
 const useStyles = makeStyles(() => ({
   blueBanner: {
     backgroundColor: colors.blue.light[2],
-    display: 'flex'
+    display: 'flex',
+    overflow: 'hidden'
   },
   card: {
     padding: '4em 0',
@@ -19,7 +22,8 @@ const useStyles = makeStyles(() => ({
     padding: '4em 0'
   },
   guideIntent: {
-    marginTop: '2em'
+    marginTop: '2em',
+    marginBottom: '2em'
   }
 }));
 
@@ -52,9 +56,7 @@ export default function Home() {
               </Slide>
             </Grid>
             <Grid item xs={4}>
-              <Container maxWidth='sm' className={classes.roadmap}>
-                <img src={roadmap} alt='roadmap' />
-              </Container>
+              <img className={classes.roadmap} src={roadmap} alt='roadmap' />
             </Grid>
           </Grid>
         </Container>
@@ -65,29 +67,30 @@ export default function Home() {
             <Text.H2 fontWeight='bold'>como este guia pode te ajudar</Text.H2>
           </Card.Header>
           <Card.Content>
-            <List component='nav'>
+            <List>
               <ListItem button>
                 <ListItemIcon>
-                  1
+                  <Text>1</Text>
                 </ListItemIcon>
-                <ListItemText primary='informações centralizadas' secondary='aprenda tudo sobre o olist'  />
+                <ListItemText primary={<Text>informações centralizadas</Text>} secondary='aprenda tudo sobre o olist'  />
               </ListItem>
               <ListItem button>
                 <ListItemIcon>
-                  2
+                  <Text>2</Text>
                 </ListItemIcon>
-                <ListItemText primary='motivação' secondary='veja seus resultados melhorarem ao aplicar nossas recomendações'/>
+                <ListItemText primary={<Text>motivação</Text>} secondary='veja seus resultados melhorarem ao aplicar nossas recomendações'/>
               </ListItem>
               <ListItem button>
                 <ListItemIcon>
-                  2
+                  <Text>3</Text>
                 </ListItemIcon>
-                <ListItemText primary='pontos de troca' secondary='mais vantagens ao aprender e aplicar o conteúdo'/>
+                <ListItemText primary={<Text>pontos de troca</Text>} secondary='mais vantagens ao aprender e aplicar o conteúdo'/>
               </ListItem>
             </List>
           </Card.Content>
         </Card>
       </Container>
+      <Footer />
     </>
   );
 }
