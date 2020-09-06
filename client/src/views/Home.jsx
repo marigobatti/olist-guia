@@ -1,7 +1,7 @@
 import React from 'react';
 import { Slide, Grid, Container, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { theme, colors, Text, Card } from '@olist/united';
+import { colors, Text, Card } from '@olist/united';
 
 import Footer from '../components/Footer';
 import roadmap from '../assets/images/roadmap.png';
