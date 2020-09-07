@@ -25,7 +25,7 @@ const commonStyles = {
 };
 
 function BaseButton(props) {
-  const variant = props.variant ?? 'default';
+  const variation = props.variation ?? 'default';
 
   const loadingVariationMap = {
     primary: { backgroundColor: 'white' },
@@ -36,7 +36,7 @@ function BaseButton(props) {
   return (
     <MaterialButton
       {...props}
-      startIcon={props.loading ? <Loading {...loadingVariationMap[variant]} /> : props.startIcon}
+      startIcon={props.loading ? <Loading {...loadingVariationMap[variation]} /> : props.startIcon}
     >
       {props.loading ? '' : props.children}
     </MaterialButton>
