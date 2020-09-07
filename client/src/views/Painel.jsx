@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export default function Home() {
+export default function Painel() {
   const classes = useStyles();
 
   const [ categorias, setCategorias ] = useState([]);
@@ -101,14 +101,26 @@ export default function Home() {
     })
   }
 
+  const getTotalPontos = () => {
+    const todasEtapas = [].concat.apply([], categorias.map(cat => cat.etapas));
+    const etapasFeitas = todasEtapas.filter(rec => rec.progresso?.terminou ?? false);
+    const soma = etapasFeitas.reduce((prevPontuacao, curr) => prevPontuacao + curr.pontuacao, 0);
+
+    return soma;
+  }
+
   return (
     <>
       <Container>
         <Grid container spacing={3}>
           <Grid item lg={8}>
             <Card>
-              <Card.Header>
+              <Card.Header style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Text.H3 fontWeight='bold'>progresso</Text.H3>
+                <div style={{ display: 'flex' }}>
+                  <Text.H3 style={{ marginRight: '0.3em'}} fontWeight='bold'>pontos:</Text.H3>
+                  <Text.H3 fontWeight='bold'>{getTotalPontos()}</Text.H3>
+                </div>
               </Card.Header>
               {loading ? 
                 <Card.Content>
