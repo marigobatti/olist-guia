@@ -7,8 +7,8 @@ class UserController {
     const { email, password } = request.all()
 
     const user = await UserModel.query().where('email', email).first();
-    const token = await auth.attempt(email, password)
-    return response.json({ username: user.nome, token })
+    const access = await auth.attempt(email, password)
+    return response.json({ username: user.nome, ...access })
   }
 }
 
