@@ -3,14 +3,10 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class Etapa extends Model {
+class Progresso extends Model {
   static boot () {
     super.boot()
   }
-    
-  progresso() {
-    return this.hasOne('App/Models/Progresso');
-  }
 }
 
-module.exports = Etapa
+module.exports = Progresso

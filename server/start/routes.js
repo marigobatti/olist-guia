@@ -21,3 +21,7 @@ Route.get('/', () => {
 })
 
 Route.post('login', 'UserController.login')
+
+Route.get('progressos', 'ProgressoController.index').middleware('auth')
+Route.post('progressos', 'ProgressoController.store').middleware('auth')
+

@@ -7,6 +7,10 @@ class Categoria extends Model {
   static boot () {
     super.boot()
   }
+    
+  etapas() {
+    return this.hasMany('App/Models/Etapa');
+  }
 }
 
 module.exports = Categoria
