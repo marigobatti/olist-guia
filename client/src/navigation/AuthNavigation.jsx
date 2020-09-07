@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { colorsByAlias, Nav, Navbar, Text } from '@olist/united';
 import { Container, makeStyles } from '@material-ui/core';
 
@@ -28,10 +29,10 @@ export default function AuthNavigation() {
       <Container>
         <div className={classes.navbar}>
           <Navbar>
-            <Navbar.Brand><img src={logo} width='86' alt='Logo do Olist Guia' /></Navbar.Brand>
+            <Navbar.Brand><Link to='/painel'><img src={logo} width='86' alt='Logo do Olist Guia' /></Link></Navbar.Brand>
             <Nav>
-              <Nav.Link href='#' colorHover={colorsByAlias.link}>guia</Nav.Link>
-              <Nav.Link href='#' colorHover={colorsByAlias.link}>prêmios</Nav.Link>
+              <Nav.Link href='/painel' colorHover={colorsByAlias.link}>guia</Nav.Link>
+              <Nav.Link href='/premios' colorHover={colorsByAlias.link}>prêmios</Nav.Link>
             </Nav>
           </Navbar>
           <span className={classes.actions}>

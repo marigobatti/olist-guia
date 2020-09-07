@@ -9,13 +9,22 @@ import logo from '../assets/images/logo.png';
 
 
 const useStyles = makeStyles(() => ({
-  container: {
-    minHeight: '100vh',
+  background: {
+    display: 'flex',
+    flexFlow: 'column',
+    height: '100vh', 
     background: theme.colors.foundation.primaryDark
   },
+  container: {
+    minHeight: '90vh'
+  },
   login: {
-    height: '18em',
-    width: '18em'
+    width: '22em',
+    height: '22em',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   logo: {
     display: 'flex',
@@ -36,22 +45,17 @@ export default function Home() {
   }
 
   return (
-    <Grid
-      container
-      spacing={0}
-      direction='column'
-      alignItems='center'
-      justify='center'
-      className={classes.container}
-    >
-      <Grid item xs={3}>
-        <Card>
-          <Flex
-            className={classes.login}
-            justifyContent="space-between"
-            alignItems="center"
-            flexDirection="column"
-          >
+    <div className={classes.background}>
+      <Grid
+        container
+        spacing={0}
+        direction='column'
+        alignItems='center'
+        justify='center'
+        className={classes.container}
+      >
+        <Grid item xs={3}>
+          <Card className={classes.login}>
             <img src={logo} width={150} />
             <div>
               <Text color='grey' fontWeight='bold'>email</Text>
@@ -73,10 +77,9 @@ export default function Home() {
             <div>
               <PrimaryButton onClick={submitLogin} variant='primary' loading={loading}>entrar</PrimaryButton>
             </div>
-          </Flex>
-        </Card>
-      </Grid>   
-
-    </Grid> 
+          </Card>
+        </Grid>
+      </Grid> 
+    </div>
   );
 }
