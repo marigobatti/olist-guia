@@ -23,16 +23,10 @@ export default function PublicNavigation() {
       <Container>
         <div className={classes.navbar}>
           <Navbar>
-            <Navbar.Brand><img src={logo} width='86' alt='Logo do Olist Guia' /></Navbar.Brand>
+            <Navbar.Brand><Link to='/'><img src={logo} width='86' alt='Logo do Olist Guia' /></Link></Navbar.Brand>
             <Nav>
-              <Nav.Link href='#' colorHover={colorsByAlias.link}>planos</Nav.Link>
-              <NavDropdown>
-                <NavDropdown.Toggle colorHover={colorsByAlias.link}>conteúdo gratuito</NavDropdown.Toggle>
-                <NavDropdown.Menu>
-                  <NavDropdown.Item>new product</NavDropdown.Item>
-                  <NavDropdown.Item>import products</NavDropdown.Item>
-                </NavDropdown.Menu>
-              </NavDropdown>
+              <Nav.Link href='/planos' colorHover={colorsByAlias.link}>planos</Nav.Link>
+              <Nav.Link href='/conteudo_gratuito' colorHover={colorsByAlias.link}>conteúdo gratuito</Nav.Link>
             </Nav>
           </Navbar>
           <Button component={Link} to="/login" style={{ marginRight: '1em' }}>área do logista</Button>

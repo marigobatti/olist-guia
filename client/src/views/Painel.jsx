@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { 
   makeStyles, 
   Grid, 
@@ -8,9 +9,12 @@ import {
   ListItemIcon, 
   ListItemText
 } from '@material-ui/core';
-import { theme, Icon, Text, Card, Table, ProgressBar } from '@olist/united';
+import { colorsByAlias, theme, Icon, Text, Card, Table, ProgressBar, Loading } from '@olist/united';
 import { Accordion, AccordionDetails, AccordionSummary } from '../components/Accordion';
 import Footer from '../components/Footer';
+
+import { index as indexProgresso, store as storeProgresso } from '../services/progresso';
+import { PrimaryButton } from '../components/Button';
 
 
 const useStyles = makeStyles(() => ({
@@ -23,11 +27,87 @@ const useStyles = makeStyles(() => ({
   stepsProgress: {
     display: 'flex',
     alignItems: 'center'
+  },
+  stepsButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+  accordionDetails: {
+    display: 'block'
   }
 }));
 
-export default function Home() {
+export default function Painel() {
   const classes = useStyles();
+
+  const [ categorias, setCategorias ] = useState([]);
+  const [ loading, setLoading ] = useState(false);
+
+  const getCategorias = async () => {
+    setLoading(true);
+    try {
+      setCategorias(await indexProgresso());
+    } catch(e){
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const totalEtapasFeitas = (categoria) => {
+    const etapasFeitas = categoria.etapas.filter(rec => rec.progresso?.terminou ?? false);
+    return etapasFeitas.length;
+  }
+
+  useEffect(() => {
+    getCategorias();
+  }, []);
+
+  const updateEtapa = (etapa) => {
+    const updatedCategorias = categorias.map(cat => {
+      if (cat.id == etapa.categoria_id) {
+        return {
+          ...cat,
+          etapas: cat.etapas.map(et => {
+            if (et.id == etapa.id)
+              return {
+                ...et,
+                ...etapa
+              }
+            else
+              return et;
+          })
+        };
+      } else {
+        return cat;
+      }
+    });
+
+    setCategorias(updatedCategorias);
+  }
+
+  const iniciarEtapa = async (etapa) => {
+    updateEtapa({
+      ...etapa,
+      loading: true
+    });
+
+    const response = await storeProgresso({ etapa_id: etapa.id, terminou: false });
+
+    updateEtapa({
+      ...etapa,
+      loading: false,
+      progresso: response
+    })
+  }
+
+  const getTotalPontos = () => {
+    const todasEtapas = [].concat.apply([], categorias.map(cat => cat.etapas));
+    const etapasFeitas = todasEtapas.filter(rec => rec.progresso?.terminou ?? false);
+    const soma = etapasFeitas.reduce((prevPontuacao, curr) => prevPontuacao + curr.pontuacao, 0);
+
+    return soma;
+  }
 
   return (
     <>
@@ -35,143 +115,78 @@ export default function Home() {
         <Grid container spacing={3}>
           <Grid item lg={8}>
             <Card>
-              <Card.Header>
+              <Card.Header style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Text.H3 fontWeight='bold'>progresso</Text.H3>
+                <div style={{ display: 'flex' }}>
+                  <Text.H3 style={{ marginRight: '0.3em'}} fontWeight='bold'>pontos:</Text.H3>
+                  <Text.H3 fontWeight='bold'>{getTotalPontos()}</Text.H3>
+                </div>
               </Card.Header>
-              <Container className={classes.steps}>
-                <Accordion square>
-                  <AccordionSummary
-                    expandIcon={<Icon name='chevron-down-outline' />}
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Grid container spacing={2}>
-                      <Grid xs={6} item>
-                        <Text.H4 fontWeight='bold'>primeiros passos</Text.H4>
-                      </Grid>
-                      <Grid xs={6} item className={classes.stepsProgress}>
-                        <ProgressBar current='100' total='100' height='12px'/>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                      sit amet blandit leo lobortis eget.
-                    </Text>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion square>
-                  <AccordionSummary
-                    expandIcon={<Icon name='chevron-down-outline' />}
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Grid container spacing={2}>
-                      <Grid xs={6} item>
-                        <Text.H4 fontWeight='bold'>cadastro de produtos</Text.H4>
-                      </Grid>
-                      <Grid xs={6} item className={classes.stepsProgress}>
-                        <ProgressBar current='85' total='100' height='12px'/>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                      sit amet blandit leo lobortis eget.
-                    </Text>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion square>
-                  <AccordionSummary
-                    expandIcon={<Icon name='chevron-down-outline' />}
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Grid container spacing={2}>
-                      <Grid xs={6} item>
-                        <Text.H4 fontWeight='bold'>vendas</Text.H4>
-                      </Grid>
-                      <Grid xs={6} item className={classes.stepsProgress}>
-                        <ProgressBar current='40' total='100' height='12px'/>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                      sit amet blandit leo lobortis eget.
-                    </Text>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion square>
-                  <AccordionSummary
-                    expandIcon={<Icon name='chevron-down-outline' />}
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Grid container spacing={2}>
-                      <Grid xs={6} item>
-                        <Text.H4 fontWeight='bold'>entrega dos produtos</Text.H4>
-                      </Grid>
-                      <Grid xs={6} item className={classes.stepsProgress}>
-                        <ProgressBar current='60' total='100' height='12px'/>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                      sit amet blandit leo lobortis eget.
-                    </Text>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion square>
-                  <AccordionSummary
-                    expandIcon={<Icon name='chevron-down-outline' />}
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Grid container spacing={2}>
-                      <Grid xs={6} item>
-                        <Text.H4 fontWeight='bold'>fidelizar e manter cliente informado</Text.H4>
-                      </Grid>
-                      <Grid xs={6} item className={classes.stepsProgress}>
-                        <ProgressBar current='10' total='100' height='12px'/>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Text>
-                      Dica de ouro olist: mantenha o seu canal de atendimento sempre aberto aos seus clientes!
-                      Não demore para tirar dúvidas sobre os produtos e entregas. Dê voz aos seus cleintes e deixe-os à vontade para se comunicar.
-                    </Text>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion square>
-                  <AccordionSummary
-                    expandIcon={<Icon name='chevron-down-outline' />}
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Grid container spacing={2}>
-                      <Grid xs={6} item>
-                        <Text.H4 fontWeight='bold'>estratégias de divulgação</Text.H4>
-                      </Grid>
-                      <Grid xs={6} item className={classes.stepsProgress}>
-                        <ProgressBar current='20' total='100' height='12px'/>
-                      </Grid>
-                    </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Text>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                      sit amet blandit leo lobortis eget.
-                    </Text>
-                  </AccordionDetails>
-                </Accordion>
-              </Container>
+              {loading ? 
+                <Card.Content>
+                  <Loading backgroundColor={colorsByAlias.primary} variation='primary' />
+                </Card.Content> :
+                <Container className={classes.steps}>
+                  {categorias.map(categoria => (
+                    <Accordion square key={categoria.id}>
+                      <AccordionSummary
+                        expandIcon={<Icon name='chevron-down-outline' />}
+                        aria-controls='panel1a-content'
+                        id='panel1a-header'
+                      >
+                        <Grid container spacing={2}>
+                          <Grid xs={6} item>
+                            <Text.H4 fontWeight='bold'>{ categoria.nome }</Text.H4>
+                          </Grid>
+                          <Grid xs={6} item className={classes.stepsProgress}>
+                            {categoria.etapas.length > 0 &&
+                              <ProgressBar current={totalEtapasFeitas(categoria)} total={categoria.etapas.length} height='12px'/>
+                            }
+                          </Grid>
+                        </Grid>
+                      </AccordionSummary>
+                      <AccordionDetails className={classes.accordionDetails}>
+                        <Text><ReactMarkdown source={categoria.descricao} /></Text>
+                        <div>
+                        {categoria.etapas.map(etapa => (
+                          <Accordion square key={etapa.id}>
+                            <AccordionSummary
+                              expandIcon={<Icon name='chevron-down-outline' />}
+                              aria-controls='panel1a-content'
+                              id='panel1a-header'
+                            >
+                              <Grid container spacing={2}>
+                                <Grid xs={6} item>
+                                  <Text.H4>{ etapa.nome }</Text.H4>
+                                </Grid>
+                                <Grid xs={6} item className={classes.stepsButton}>
+                                  <PrimaryButton 
+                                    variant='primary' 
+                                    loading={etapa.loading} 
+                                    onClick={() => iniciarEtapa(etapa)} 
+                                    disabled={etapa.progresso != null}
+                                  >
+                                    {etapa.progresso ==  null ? 
+                                      'Iniciar' :
+                                      etapa.progresso.terminou ?
+                                      <Icon color='white' name='success-outline' size={20} /> :
+                                      'Em progresso'
+                                    }
+                                  </PrimaryButton>
+                                </Grid>
+                              </Grid>
+                            </AccordionSummary>
+                            <AccordionDetails className={classes.accordionDetails}>
+                              <Text><ReactMarkdown source={etapa.descricao}/></Text>
+                            </AccordionDetails>
+                          </Accordion>
+                        ))}
+                        </div>
+                      </AccordionDetails>
+                    </Accordion>
+                  ))}
+                </Container>
+              }
             </Card>
           </Grid>
           <Grid item lg={4}>
