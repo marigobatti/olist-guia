@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { colorsByAlias, Nav, Navbar, NavDropdown } from '@olist/united';
 import { Container, makeStyles } from '@material-ui/core';
 
-import { Button, PrimaryButton } from '../components/Button';
+import { Button } from '../components/Button';
 import logo from '../assets/images/logo.png';
 
 
@@ -34,7 +35,7 @@ export default function PublicNavigation() {
               </NavDropdown>
             </Nav>
           </Navbar>
-          <Button style={{ marginRight: '1em' }}>área do logista</Button>
+          <Button component={Link} to="/login" style={{ marginRight: '1em' }}>área do logista</Button>
         </div>
       </Container>
     </header>

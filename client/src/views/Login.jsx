@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { theme, Text, Card, Input, Flex } from '@olist/united';
 
+import { useAuth } from '../contexts/auth'
 import { PrimaryButton } from '../components/Button';
 import logo from '../assets/images/logo.png';
 
@@ -27,6 +28,12 @@ export default function Home() {
 
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+
+	const { login, loading } = useAuth();
+
+  const submitLogin = () => {
+    login({ email, password });
+  }
 
   return (
     <Grid
@@ -64,7 +71,7 @@ export default function Home() {
               />
             </div>
             <div>
-              <PrimaryButton>entrar</PrimaryButton>
+              <PrimaryButton onClick={submitLogin} variant='primary' loading={loading}>entrar</PrimaryButton>
             </div>
           </Flex>
         </Card>
