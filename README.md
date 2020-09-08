@@ -1,13 +1,10 @@
 [![N|Solid](https://github.com/marigobatti/olist-guia/blob/master/client/src/assets/images/logo.png?raw=true)]()
 
-Um guia para facilitar e simplificar a jornada do usuário dentro do canal de vendas Olist.
+Considerando o problema apresentado pelo desafio Olist, onde os vendedores da plataforma não ficam retidos pela falta de entendimento sobre o site e muitas vezes dependem de consultorias pagas para atingir bons resultados, nós criamos o Olist Guia. 
 
-Nele o vendedor encontrará explicações detalhadas sobre todas as fazes, desde o cadastro até a entrega de produtos, com clareza e objetividade.
-Além de simplificar a jornada, o guia ainda oferece estratégia de vendas e dicas de marketing. Sendo utilizado como um acelerador de resultados e definido como um subproduto da plataforma Olist.
+Um site responsivo que atende e responde todas as dúvidas dos usuários e ainda oferece dicas de vendas, marketing e até tendências do mercado virtual. Ainda programamos uma gamificação baseada nos conteúdos assistidos por cada usuário, organizada por níveis e um ranking dos usuários mais engajados. 
 
-
-# Gamificação
-Com o objetivo de aumentar o engajamento e a competitividade entre os vendedores, foi criado também uma forma de gamificação baseado nos conteúdos consumidos pelo usuário, quando maior o consumo e aplicação do conteúdo, melhores os resultados de vendas e mais pontos no ranking terá, fazendo com que o cliente suba os níveis e concorra a prêmios cada vez melhores.
+Um projeto simples, prático e eficiente. Que resolve o problema da empresa e dos usuários, gerando retenção na plataforma e ocasionando o sucesso dos vendedores.
 
 # Time 4 - Membros:
 
